@@ -74,7 +74,7 @@ namespace RugbyLeague
 
             setOffset(9,9);
 
-            runSpeed = FlxU.random(100, 250);
+            runSpeed = FlxU.random(150, 200);
 
             mode = MODE_ATTACK;
 
@@ -88,15 +88,15 @@ namespace RugbyLeague
                 if (hasBall)
                 {
                     Player p = team.getNextPlayerToLeft(false);
-                    
-                    float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(p.x, p.y));
+
+                    float newAngle = FlxU.getAngle(new Vector2(x + (width / 2), y + (height / 2)), new Vector2(p.x + (width / 2), p.y + (height / 2)));
 
                     double radians = Math.PI / 180 * (newAngle + 90);
 
                     double velocity_x = Math.Cos((float)radians);
                     double velocity_y = Math.Sin((float)radians);
 
-                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x, y, p.x, p.y, newAngle);
+                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
 
                     passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
                     
@@ -108,14 +108,14 @@ namespace RugbyLeague
                 {
                     Player p = team.getNextPlayerToRight(false);
 
-                    float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(p.x, p.y));
+                    float newAngle = FlxU.getAngle(new Vector2(x + (width / 2), y + (height / 2)), new Vector2(p.x + (width / 2), p.y + (height / 2)));
 
                     double radians = Math.PI / 180 * (newAngle + 90);
 
                     double velocity_x = Math.Cos((float)radians);
                     double velocity_y = Math.Sin((float)radians);
 
-                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x, y, p.x, p.y, newAngle);
+                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
 
                     passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
                     
@@ -235,10 +235,11 @@ namespace RugbyLeague
 
             base.update();
 
+            //hold onto ball if in possession.
             if (hasBall)
             {
                 ball.isHeld = true;
-                ball.at(this);
+                ball.atCenter(this);
             }
 
         }
