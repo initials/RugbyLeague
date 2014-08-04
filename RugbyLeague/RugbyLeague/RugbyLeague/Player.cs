@@ -87,9 +87,18 @@ namespace RugbyLeague
             {
                 if (hasBall)
                 {
-                    Player p = team.getNextPlayerToRight(false);
+                    Player p = team.getNextPlayerToLeft(false);
+                    
+                    float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(p.x, p.y));
 
-                    passBall(250, -100);
+                    double radians = Math.PI / 180 * (newAngle + 90);
+
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+
+                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x, y, p.x, p.y, newAngle);
+
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
                     
                 }
             }
@@ -97,7 +106,18 @@ namespace RugbyLeague
             {
                 if (hasBall)
                 {
-                    passBall(-250,-100);
+                    Player p = team.getNextPlayerToRight(false);
+
+                    float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(p.x, p.y));
+
+                    double radians = Math.PI / 180 * (newAngle + 90);
+
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+
+                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x, y, p.x, p.y, newAngle);
+
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
                     
                 }
 
@@ -246,6 +266,20 @@ namespace RugbyLeague
             hasBall = false;
 
         }
+        public void passBallUsingAngle(float Angle, float Thrust)
+        {
+            ball.x = x - 3;
+            ball.y = y + height + 3;
+            ball.timeSincePass = 0;
+
+            ball.angle = Angle;
+            ball.thrust = Thrust;
+
+            ball.isHeld = false;
+            hasBall = false;
+
+        }
+
 
         public override void overlapped(FlxObject obj)
         {
