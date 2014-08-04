@@ -34,3 +34,9 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+RugbyLeague/RugbyLeague/bin/x86/Debug/Content/buttons/*
+RugbyLeague/RugbyLeague/bin/*
+*.cachefile
+RugbyLeague/RugbyLeague/obj/*
+*.suo
