@@ -243,6 +243,26 @@ namespace RugbyLeague
 
                     }
                 }
+                else if (this.mode == MODE_PLAYTHEBALL)
+                {
+                    if (jerseyNumber == 9)
+                    {
+                        float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(ball.x, ball.y-20));
+
+                        double radians = Math.PI / 180 * (newAngle + 90);
+
+                        double velocity_x = Math.Cos((float)radians);
+                        double velocity_y = Math.Sin((float)radians);
+                        this.velocity.X = runSpeed * (float)velocity_x * -1;
+                        this.velocity.Y = runSpeed * (float)velocity_y * -1;
+
+                        if (x == ball.x && y==ball.y)
+                        {
+                            this.mode = MODE_ATTACK;
+                        }
+
+                    }
+                }
             }
 
 
