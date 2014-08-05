@@ -13,6 +13,15 @@
 
         #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="gameValue"></param>
+        /// <param name="defaultAmount"></param>
+        /// <param name="minAmount"></param>
+        /// <param name="maxAmount"></param>
+        /// <param name="increment"></param>
         public GameSettings(string name,
                             float gameValue,
                             float defaultAmount,

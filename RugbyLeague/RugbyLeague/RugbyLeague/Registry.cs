@@ -54,6 +54,21 @@ namespace RugbyLeague
         };
 
 
+        public static GameSettings[] GameSettings =
+        {
+            //                          Name                Default,    GameValue,  Min,   Max,     increment   //Number id
+            new GameSettings("Clouds",           10,         10,         1,      100,    1),         //0
+            new GameSettings("Bombs",            4,          4,          0,      20,     1),         //1
+            new GameSettings("Cave",             50,         50,         40,     60,     1),         //2
+            new GameSettings("Regen Time",       10,         10,         3,      100,    1),         //3
+            new GameSettings("Winning Score",    10,         10,         1,      100,    1),         //4
+			new GameSettings("Run Speed",        120,        120,        50,     200,    10),        //5
+            new GameSettings("Bullet Regen",     4,          4,          0,      100,    1),         //6
+            new GameSettings("Power Up Time",    7,          7,          1,      20,     1),         //7
+            new GameSettings("Bullet Velocity",  360,        360,        100,    600,    20),        //8
+            new GameSettings("Randomonium",      0,          0,          0,      0,      0),         //9
+			new GameSettings("Play Now",         0,          0,          0,      0,      0),         //10
+        };
 
 
         public static void runCheat(string Cheat)

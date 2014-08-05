@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RugbyLeague\Ball.cs" />
+    <Compile Include="RugbyLeague\GameSettings.cs" />
     <Compile Include="RugbyLeague\Player.cs" />
     <Compile Include="RugbyLeague\PlayState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
