@@ -1,7 +1,7 @@
 ﻿w=960
 h=540
 fullscreen=0
-zoom=2
+zoom=1
 
 
 

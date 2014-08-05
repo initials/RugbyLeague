@@ -15,7 +15,7 @@ namespace RugbyLeague
         private int jerseyNumber;
 
         private FlxText jerseyText;
-        private FlxSprite selectedPlayerIcon;
+        private SelectedPlayerIcon selectedPlayerIcon;
         private Ball ball;
         private Team team;
 
@@ -29,8 +29,8 @@ namespace RugbyLeague
         public const string MODE_WAIT = "MODE_WAIT";
 
 
-        float runSpeed;
-
+        public float runSpeed;
+        public float sideStep;
 
         public Player(int xPos, int yPos, int JerseyNumber, Ball ReferenceToBall, Team ReferenceToTeam)
             : base(xPos, yPos)
@@ -44,12 +44,7 @@ namespace RugbyLeague
             jerseyText.setFormat(null, 1, Color.White, FlxJustification.Center, Color.Black);
             jerseyText.setScrollFactors(1, 1);
 
-            selectedPlayerIcon = new FlxSprite(xPos, yPos);
-            selectedPlayerIcon.loadGraphic(FlxG.Content.Load<Texture2D>("examples/selectedPlayerIcon"), true, false, 48, 48);
-            selectedPlayerIcon.addAnimation("selected", new int[] { 0, 1 }, 12, true);
-            selectedPlayerIcon.play("selected");
-            selectedPlayerIcon.alpha = 0.25f;
-            selectedPlayerIcon.setOffset(9, 9);
+            selectedPlayerIcon = new SelectedPlayerIcon(xPos, yPos);
 
             ball = ReferenceToBall;
 
@@ -75,6 +70,8 @@ namespace RugbyLeague
             setOffset(9,9);
 
             runSpeed = FlxU.random(150, 200);
+            sideStep = FlxU.random(2, 20);
+
 
             mode = MODE_ATTACK;
 
@@ -83,9 +80,9 @@ namespace RugbyLeague
         override public void update()
         {
             // Passsing
-            if (FlxG.keys.justPressed(Keys.OemPeriod))
+            if (hasBall)
             {
-                if (hasBall)
+                if (FlxG.keys.justPressed(Keys.OemPeriod) || FlxG.gamepads.isNewButtonPress(Buttons.RightShoulder))
                 {
                     Player p = team.getNextPlayerToLeft(false);
 
@@ -99,12 +96,8 @@ namespace RugbyLeague
                     Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
 
                     passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                    
                 }
-            }
-            if (FlxG.keys.justPressed(Keys.OemComma))
-            {
-                if (hasBall)
+                if (FlxG.keys.justPressed(Keys.OemComma) || FlxG.gamepads.isNewButtonPress(Buttons.LeftShoulder))
                 {
                     Player p = team.getNextPlayerToRight(false);
 
@@ -118,13 +111,47 @@ namespace RugbyLeague
                     Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
 
                     passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                    
+
+                }
+                if (FlxG.keys.K || FlxG.gamepads.isButtonDown(Buttons.LeftTrigger))
+                {
+                    selectedPlayerIcon.angle += 3;
+                }
+                else if (FlxG.keys.L || FlxG.gamepads.isButtonDown(Buttons.RightTrigger))
+                {
+                    selectedPlayerIcon.angle -= 3;
+                }
+                else
+                {
+                    selectedPlayerIcon.angle = 90;
                 }
 
+                if (FlxG.keys.justReleased(Keys.K) || FlxG.gamepads.isNewButtonRelease(Buttons.LeftTrigger))
+                {
+                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 90);
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
+                else if (FlxG.keys.justReleased(Keys.L) || FlxG.gamepads.isNewButtonRelease(Buttons.RightTrigger))
+                {
+                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 90);
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
             }
 
 
 
+            if (isSelected)
+            {
+                //sidestep (aka juke)
+                if (FlxG.keys.justPressed(Keys.M) || FlxG.gamepads.isNewButtonPress(Buttons.X))
+                {
+                    x += sideStep;
+                }
+            }
             if (velocity.X != 0)
             {
                 play("run");
@@ -223,7 +250,6 @@ namespace RugbyLeague
             selectedPlayerIcon.at(this);
             selectedPlayerIcon.x -= 8;
             selectedPlayerIcon.y -= 8;
-            selectedPlayerIcon.angle += 2;
             selectedPlayerIcon.update();
 
             jerseyText.at(this); 
@@ -239,7 +265,7 @@ namespace RugbyLeague
             if (hasBall)
             {
                 ball.isHeld = true;
-                ball.atCenter(this);
+                ball.atCenter(this, 0, 10);
             }
 
         }

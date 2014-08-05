@@ -80,6 +80,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="RugbyLeague\Registry.cs" />
+    <Compile Include="RugbyLeague\SelectedPlayerIcon.cs" />
     <Compile Include="RugbyLeague\Team.cs" />
   </ItemGroup>
   <ItemGroup>
