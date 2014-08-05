@@ -113,6 +113,20 @@ namespace RugbyLeague
                     passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
 
                 }
+                if (FlxG.keys.justReleased(Keys.K) || FlxG.gamepads.isNewButtonRelease(Buttons.LeftTrigger))
+                {
+                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 180);
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
+                else if (FlxG.keys.justReleased(Keys.L) || FlxG.gamepads.isNewButtonRelease(Buttons.RightTrigger))
+                {
+                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 180);
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
                 if (FlxG.keys.K || FlxG.gamepads.isButtonDown(Buttons.LeftTrigger))
                 {
                     selectedPlayerIcon.angle += 3;
@@ -126,20 +140,7 @@ namespace RugbyLeague
                     selectedPlayerIcon.angle = 90;
                 }
 
-                if (FlxG.keys.justReleased(Keys.K) || FlxG.gamepads.isNewButtonRelease(Buttons.LeftTrigger))
-                {
-                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 90);
-                    double velocity_x = Math.Cos((float)radians);
-                    double velocity_y = Math.Sin((float)radians);
-                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                }
-                else if (FlxG.keys.justReleased(Keys.L) || FlxG.gamepads.isNewButtonRelease(Buttons.RightTrigger))
-                {
-                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 90);
-                    double velocity_x = Math.Cos((float)radians);
-                    double velocity_y = Math.Sin((float)radians);
-                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                }
+
             }
 
 
