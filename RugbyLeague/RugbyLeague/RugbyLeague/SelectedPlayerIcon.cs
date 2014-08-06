@@ -21,6 +21,7 @@ namespace RugbyLeague
             play("selected");
             alpha = 0.25f;
             setOffset(9, 9);
+            angle = 90;
 
         }
 

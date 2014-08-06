@@ -52,7 +52,7 @@ namespace RugbyLeague
             loadGraphic(FlxG.Content.Load<Texture2D>("examples/running"), true, false, 32, 32);
 
             addAnimation("idle", new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52 }, (int)FlxU.random(12,24), true);
-            addAnimation("run", new int[] { 53, 54, 55, 56, 57, 58, 59, 60,61,62,63,64,65,66,67,68,69,70,71 }, 24, true);
+            addAnimation("run", new int[] { 53, 54, 55, 56, 57, 58, 59, 60,61,62,63,64,65,66,67,68,69,70,71 }, 36, true);
             addAnimation("tackled", new int[] { 53, 63 }, 24, true);
             play("idle");
 
@@ -256,11 +256,6 @@ namespace RugbyLeague
                         double velocity_y = Math.Sin((float)radians);
                         this.velocity.X = runSpeed * (float)velocity_x * -1;
                         this.velocity.Y = runSpeed * (float)velocity_y * -1;
-
-                        if (x == ball.x && y==ball.y)
-                        {
-                            this.mode = MODE_ATTACK;
-                        }
 
                     }
                 }

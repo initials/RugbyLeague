@@ -143,6 +143,8 @@ namespace RugbyLeague
             {
                 ((Player)(e.Object1)).hasBall = true;
                 ((Player)(e.Object1)).isSelected = true;
+                //team2.setPlayerModeTo(Player.MODE_ATTACK);
+                
             }
 
             return true;
