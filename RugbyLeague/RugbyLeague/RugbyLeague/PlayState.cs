@@ -37,6 +37,7 @@ namespace RugbyLeague
             playingField = new FlxTilemap();
             playingField.auto = FlxTileblock.STRING;
             playingField.loadMap(levelInformation["SportsField"], FlxG.Content.Load<Texture2D>("examples/sports_ground"), 16,16);
+            playingField.checkerboard = true;
             add(playingField);
 
 
