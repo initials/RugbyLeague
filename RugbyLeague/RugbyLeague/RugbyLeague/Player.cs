@@ -49,16 +49,19 @@ namespace RugbyLeague
             ball = ReferenceToBall;
 
 
-            loadGraphic(FlxG.Content.Load<Texture2D>("examples/running"), true, false, 32, 32);
+            loadGraphic(FlxG.Content.Load<Texture2D>("player"), true, false, 32, 32);
 
-            addAnimation("idle", new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52 }, (int)FlxU.random(12,24), true);
-            addAnimation("run", new int[] { 53, 54, 55, 56, 57, 58, 59, 60,61,62,63,64,65,66,67,68,69,70,71 }, 36, true);
-            addAnimation("tackled", new int[] { 53, 63 }, 24, true);
-            play("idle");
+            //addAnimation("idle", new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52 }, (int)FlxU.random(12,24), true);
+            //addAnimation("run", new int[] { 53, 54, 55, 56, 57, 58, 59, 60,61,62,63,64,65,66,67,68,69,70,71 }, 36, true);
+            //addAnimation("tackled", new int[] { 53, 63 }, 24, true);
+            //play("idle");
+
+            addAnimation("idle", new int[] { 0 }, (int)FlxU.random(12,24), true);
+            addAnimation("run", new int[] { 1,2,3 }, 12, true);
 
             setDrags(1350, 1350);
 
-            angle = 90;
+            //angle = 90;
 
             isSelected = false;
 
@@ -156,20 +159,40 @@ namespace RugbyLeague
             if (velocity.X != 0)
             {
                 play("run");
-                setAngleBasedOnVelocity();
+                //setAngleFromVelocity();
                 //flicker(555);
             }
             else if (velocity.Y != 0)
             {
                 play("run");
-                setAngleBasedOnVelocity();
+                //setAngleFromVelocity();
             }
             else
             {
                 play("idle");
                 //flicker(0.001f);
             }
+            if (isSelected)
+            {
+                if (FlxControl.LEFT)
+                {
+                    this.velocity.X = runSpeed * -1;
+                }
+                if (FlxControl.RIGHT)
+                {
+                    this.velocity.X = runSpeed;
+                }
+                if (FlxControl.UP)
+                {
+                    this.velocity.Y = runSpeed * -1;
+                }
+                if (FlxControl.DOWN)
+                {
+                    this.velocity.Y = runSpeed;
+                }
+            }
 
+            /*
             if (isSelected && this.mode != MODE_PLAYTHEBALL)
             {
                 if (FlxControl.LEFT)
@@ -260,7 +283,7 @@ namespace RugbyLeague
                     }
                 }
             }
-
+            */
 
 
             selectedPlayerIcon.at(this);
@@ -281,7 +304,8 @@ namespace RugbyLeague
             if (hasBall)
             {
                 ball.isHeld = true;
-                ball.atCenter(this, 0, 10);
+                //ball.atCenter(this, 0, 10);
+                ball.at(this);
             }
 
         }

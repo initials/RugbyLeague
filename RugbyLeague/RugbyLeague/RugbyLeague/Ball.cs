@@ -24,10 +24,10 @@ namespace RugbyLeague
         public Ball(int xPos, int yPos)
             : base(xPos, yPos)
         {
-            loadGraphic(FlxG.Content.Load<Texture2D>("examples/ball"), true, false, 8, 8);
+            loadGraphic(FlxG.Content.Load<Texture2D>("ball"), true, false, 8, 8);
 
             shadow = new FlxSprite(0, 0);
-            shadow.loadGraphic(FlxG.Content.Load<Texture2D>("examples/ball"), true, false, 8, 8);
+            shadow.loadGraphic(FlxG.Content.Load<Texture2D>("ball"), true, false, 8, 8);
             shadow.color = Color.Black;
             shadow.alpha = 0.5f;
 

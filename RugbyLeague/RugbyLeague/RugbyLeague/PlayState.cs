@@ -10,11 +10,11 @@ using System.Xml.Linq;
 
 namespace RugbyLeague
 {
-    public class PlayState : BaseExampleState
+    public class PlayState : org.flixel.examples.BaseExampleState
     {
 
         //Define a playing field
-        FlxTilemap playingField;
+        FlxTileblock playingField;
 
         Ball ball;
 
@@ -30,14 +30,9 @@ namespace RugbyLeague
             FlxG.mouse.hide();
             FlxG.hideHud();
 
-            Dictionary<string, string> levelInformation = new Dictionary<string, string>();
-            levelInformation = FlxXMLReader.readAttributesFromOelFile("OgmoEditor2/SportsGround.oel", "level/SportsField");
-
-            //0, 0, 122*16, 68*16
-            playingField = new FlxTilemap();
-            playingField.auto = FlxTileblock.STRING;
-            playingField.loadMap(levelInformation["SportsField"], FlxG.Content.Load<Texture2D>("examples/sports_ground"), 16,16);
-            playingField.checkerboard = true;
+            playingField = new FlxTileblock(0, 0, 6400, 6400);
+            playingField.auto = FlxTileblock.RANDOM;
+            playingField.loadTiles(FlxG.Content.Load<Texture2D>("sports_ground"), 16, 16, 0);
             add(playingField);
 
 
@@ -60,7 +55,7 @@ namespace RugbyLeague
                     (int)Registry.StartPositions_KickOffAttack[i].Y, 
                     i + 1, ball, team1);
 
-                player.color = Color.Blue;
+                player.color = Color.LightBlue;
                 team1.add(player);
 
                 if (i == 6)
@@ -78,7 +73,7 @@ namespace RugbyLeague
                 (int)Registry.StartPositions_KickOffDefense[i].Y,
                 i + 1, ball, team2);
 
-                player.color = Color.Red;
+                player.color = Color.LightCyan;
                 player.mode = Player.MODE_DEFENSE;
                 team2.add(player);
 
@@ -158,14 +153,14 @@ namespace RugbyLeague
 
             if (team1.teamHasBall())
             {
-                team2.setPlayerModeTo(Player.MODE_TACKLED);
-                team1.setPlayerModeTo(Player.MODE_PLAYTHEBALL);
+                //team2.setPlayerModeTo(Player.MODE_TACKLED);
+                //team1.setPlayerModeTo(Player.MODE_PLAYTHEBALL);
 
             }
             if (team2.teamHasBall())
             {
-                team2.setPlayerModeTo(Player.MODE_PLAYTHEBALL);
-                team1.setPlayerModeTo(Player.MODE_TACKLED);
+                //team2.setPlayerModeTo(Player.MODE_PLAYTHEBALL);
+                //team1.setPlayerModeTo(Player.MODE_TACKLED);
             }
 
             return true;
