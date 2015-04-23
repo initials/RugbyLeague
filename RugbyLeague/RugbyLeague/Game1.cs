@@ -94,9 +94,12 @@ namespace Loader_RugbyLeague
             _flixelgame = new FlixelEntryPoint2(this);
 
             FlxG.bloom = new BloomPostprocess.BloomComponent(this);
+            FlxG.pixel = new PixelPostprocess.PixelComponent(this);
+
 
             Components.Add(_flixelgame);
             Components.Add(FlxG.bloom);
+            Components.Add(FlxG.pixel);
 
             base.Initialize();
         }

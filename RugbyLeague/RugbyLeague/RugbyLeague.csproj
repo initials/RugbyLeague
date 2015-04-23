@@ -76,6 +76,7 @@
     <Compile Include="RugbyLeague\Ball.cs" />
     <Compile Include="RugbyLeague\GameSettings.cs" />
     <Compile Include="RugbyLeague\Player.cs" />
+    <Compile Include="RugbyLeague\PlayerAdvanced.cs" />
     <Compile Include="RugbyLeague\PlayState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

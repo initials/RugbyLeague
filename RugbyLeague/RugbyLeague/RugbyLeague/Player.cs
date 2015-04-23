@@ -82,72 +82,6 @@ namespace RugbyLeague
 
         override public void update()
         {
-            // Passsing
-            if (hasBall)
-            {
-                if (FlxG.keys.justPressed(Keys.OemPeriod) || FlxG.gamepads.isNewButtonPress(Buttons.RightShoulder))
-                {
-                    Player p = team.getNextPlayerToLeft(false);
-
-                    float newAngle = FlxU.getAngle(new Vector2(x + (width / 2), y + (height / 2)), new Vector2(p.x + (width / 2), p.y + (height / 2)));
-
-                    double radians = Math.PI / 180 * (newAngle + 90);
-
-                    double velocity_x = Math.Cos((float)radians);
-                    double velocity_y = Math.Sin((float)radians);
-
-                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
-
-                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                }
-                if (FlxG.keys.justPressed(Keys.OemComma) || FlxG.gamepads.isNewButtonPress(Buttons.LeftShoulder))
-                {
-                    Player p = team.getNextPlayerToRight(false);
-
-                    float newAngle = FlxU.getAngle(new Vector2(x + (width / 2), y + (height / 2)), new Vector2(p.x + (width / 2), p.y + (height / 2)));
-
-                    double radians = Math.PI / 180 * (newAngle + 90);
-
-                    double velocity_x = Math.Cos((float)radians);
-                    double velocity_y = Math.Sin((float)radians);
-
-                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
-
-                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-
-                }
-                if (FlxG.keys.justReleased(Keys.K) || FlxG.gamepads.isNewButtonRelease(Buttons.LeftTrigger))
-                {
-                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 180);
-                    double velocity_x = Math.Cos((float)radians);
-                    double velocity_y = Math.Sin((float)radians);
-                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                }
-                else if (FlxG.keys.justReleased(Keys.L) || FlxG.gamepads.isNewButtonRelease(Buttons.RightTrigger))
-                {
-                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 180);
-                    double velocity_x = Math.Cos((float)radians);
-                    double velocity_y = Math.Sin((float)radians);
-                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
-                }
-                if (FlxG.keys.K || FlxG.gamepads.isButtonDown(Buttons.LeftTrigger))
-                {
-                    selectedPlayerIcon.angle += 3;
-                }
-                else if (FlxG.keys.L || FlxG.gamepads.isButtonDown(Buttons.RightTrigger))
-                {
-                    selectedPlayerIcon.angle -= 3;
-                }
-                else
-                {
-                    selectedPlayerIcon.angle = 90;
-                }
-
-
-            }
-
-
-
             if (isSelected)
             {
                 //sidestep (aka juke)
@@ -155,22 +89,22 @@ namespace RugbyLeague
                 {
                     x += sideStep;
                 }
+                if (FlxG.keys.justPressed(Keys.N) || FlxG.gamepads.isNewButtonPress(Buttons.Y))
+                {
+                    x -= sideStep;
+                }
             }
             if (velocity.X != 0)
             {
                 play("run");
-                //setAngleFromVelocity();
-                //flicker(555);
             }
             else if (velocity.Y != 0)
             {
                 play("run");
-                //setAngleFromVelocity();
             }
             else
             {
                 play("idle");
-                //flicker(0.001f);
             }
             if (isSelected)
             {
@@ -191,99 +125,6 @@ namespace RugbyLeague
                     this.velocity.Y = runSpeed;
                 }
             }
-
-            /*
-            if (isSelected && this.mode != MODE_PLAYTHEBALL)
-            {
-                if (FlxControl.LEFT)
-                {
-                    this.velocity.X = runSpeed * -1;
-                }
-                if (FlxControl.RIGHT)
-                {
-                    this.velocity.X = runSpeed;
-                }
-                if (FlxControl.UP)
-                {
-                    this.velocity.Y = runSpeed * -1;
-                }
-                if (FlxControl.DOWN)
-                {
-                    this.velocity.Y = runSpeed;
-                }
-            }
-            else
-            {
-                if (this.mode == MODE_ATTACK)
-                {
-                    if (y < ball.y-64)
-                    {
-                        velocity.Y = runSpeed;
-
-                    }
-                }
-                if (this.mode == MODE_DEFENSE)
-                {
-
-                    if (FlxU.getDistance(new Vector2(x, y), new Vector2(ball.x, ball.y)) < 80)
-                    {
-                        float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(ball.x, ball.y));
-
-                        double radians = Math.PI / 180 * (newAngle + 90);
-
-                        double velocity_x = Math.Cos((float)radians);
-                        double velocity_y = Math.Sin((float)radians);
-                        this.velocity.X = runSpeed * (float)velocity_x * -1;
-                        this.velocity.Y = runSpeed * (float)velocity_y * -1;
-                    }
-                    else
-                    {
-                        float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(ball.x, ball.y));
-
-                        double radians = Math.PI / 180 * (newAngle + 90);
-
-                        double velocity_x = Math.Cos((float)radians);
-                        double velocity_y = Math.Sin((float)radians);
-                        this.velocity.X = (runSpeed / 4) * (float)velocity_x * -1;
-                        this.velocity.Y = (runSpeed / 4) * (float)velocity_y * -1;
-
-                    }
-
-
-                }
-                if (this.mode == MODE_TACKLED)
-                {
-                    float tenMeters = ball.y + 160;
-
-                    if (y < tenMeters)
-                    {
-                        velocity.Y = runSpeed ;
-
-                    }
-                    else
-                    {
-                        this.velocity.Y = 0;
-                        this.mode = MODE_WAIT;
-
-                    }
-                }
-                else if (this.mode == MODE_PLAYTHEBALL)
-                {
-                    if (jerseyNumber == 9)
-                    {
-                        float newAngle = FlxU.getAngle(new Vector2(x, y), new Vector2(ball.x, ball.y-20));
-
-                        double radians = Math.PI / 180 * (newAngle + 90);
-
-                        double velocity_x = Math.Cos((float)radians);
-                        double velocity_y = Math.Sin((float)radians);
-                        this.velocity.X = runSpeed * (float)velocity_x * -1;
-                        this.velocity.Y = runSpeed * (float)velocity_y * -1;
-
-                    }
-                }
-            }
-            */
 
 
             selectedPlayerIcon.at(this);
