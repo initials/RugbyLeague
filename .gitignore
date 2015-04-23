@@ -40,3 +40,4 @@ RugbyLeague/RugbyLeague/bin/*
 *.cachefile
 RugbyLeague/RugbyLeague/obj/*
 *.suo
+RugbyLeague/RugbyLeagueContent/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
