@@ -14,7 +14,7 @@ namespace RugbyLeague
     {
 
         //Define a playing field
-        FlxTileblock playingField;
+        Field playingField;
 
         Ball ball;
 
@@ -30,16 +30,14 @@ namespace RugbyLeague
             FlxG.mouse.hide();
             FlxG.hideHud();
 
-            playingField = new FlxTileblock(0, 0, 6400, 6400);
-            playingField.auto = FlxTileblock.RANDOM;
-            playingField.loadTiles(FlxG.Content.Load<Texture2D>("sports_ground"), 16, 16, 0);
+            playingField = new Field(0, 0);
             add(playingField);
 
 
             ball = new Ball(78 * 8, 132 * 8);
             add(ball);
             FlxG.follow(ball, Registry.FOLLOW_LERP);
-            FlxG.followBounds(0, 0, 78 * 16, 132 * 16);
+            FlxG.followBounds(0, 0, 2048, 2048);
 
 
 

@@ -13,6 +13,8 @@ using System.Text;
 using org.flixel;
 using Microsoft.Xna.Framework;
 
+using RugbyLeague;
+
 namespace RugbyLeague
 {
     /// <summary>
@@ -31,7 +33,7 @@ namespace RugbyLeague
             int w = FlxG.resolutionWidth / FlxG.zoom;
             int h = FlxG.resolutionHeight / FlxG.zoom;
 
-            initGame(w, h, new RugbyLeague.PlayState(), new Color(15, 15, 15), true, new Color(5, 5, 5));
+            initGame(w, h, new PlayState(), new Color(15, 15, 15), true, new Color(5, 5, 5));
 
             FlxG.debug = false;
             FlxG.level = -1;
