@@ -49,15 +49,34 @@ namespace RugbyLeague
             ball = ReferenceToBall;
 
 
-            loadGraphic(FlxG.Content.Load<Texture2D>("player"), true, false, 32, 32);
+            //loadGraphic(FlxG.Content.Load<Texture2D>("player"), true, false, 32, 32);
+
+            loadGraphic(FlxG.Content.Load<Texture2D>("run"), true, false, 96, 96);
+
 
             //addAnimation("idle", new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52 }, (int)FlxU.random(12,24), true);
             //addAnimation("run", new int[] { 53, 54, 55, 56, 57, 58, 59, 60,61,62,63,64,65,66,67,68,69,70,71 }, 36, true);
             //addAnimation("tackled", new int[] { 53, 63 }, 24, true);
             //play("idle");
 
-            addAnimation("idle", new int[] { 0 }, (int)FlxU.random(12,24), true);
-            addAnimation("run", new int[] { 1,2,3 }, 12, true);
+            addAnimation("idle", new int[] { 32 }, (int)FlxU.random(12,24), true);
+            //addAnimation("run", new int[] { 32,33,34,35,36,37,38,39 }, 12, true);
+
+            runSpeed = FlxU.random(150, 200);
+            sideStep = FlxU.random(2, 20);
+
+            int animSpeed = Convert.ToInt32(runSpeed / 10);
+
+            addAnimation("runE", generateFrameNumbersBetween(0, 7), animSpeed, true);
+            addAnimation("runN", generateFrameNumbersBetween(8, 15), animSpeed, true);
+            addAnimation("runNE", generateFrameNumbersBetween(16, 23), animSpeed, true);
+            addAnimation("runNW", generateFrameNumbersBetween(24, 31), animSpeed, true);
+            addAnimation("runS", generateFrameNumbersBetween(32, 39), animSpeed, true);
+            addAnimation("runSE", generateFrameNumbersBetween(40, 47), animSpeed, true);
+            addAnimation("runSW", generateFrameNumbersBetween(48,55), animSpeed, true);
+            addAnimation("runW", generateFrameNumbersBetween(56, 63), animSpeed, true);
+
+
 
             setDrags(1350, 1350);
 
@@ -65,15 +84,15 @@ namespace RugbyLeague
 
             isSelected = false;
 
-            height = 16;
-            width = 16;
-            //offset.X = 12;
-            //offset.Y = 12;
+            height = 32;
+            width = 32;
 
-            setOffset(9,9);
+            offset.X = 12;
+            offset.Y = 12;
 
-            runSpeed = FlxU.random(150, 200);
-            sideStep = FlxU.random(2, 20);
+            //setOffset(9,9);
+
+
 
 
             mode = MODE_ATTACK;
@@ -96,11 +115,28 @@ namespace RugbyLeague
             }
             if (velocity.X != 0)
             {
-                play("run");
+                if (velocity.X>0)
+                    if (velocity.Y<0)
+                        play("runNE");
+                    else if (velocity.Y>0)  
+                        play("runSE");
+                    else
+                        play("runE");
+                else if (velocity.X < 0)
+                    if (velocity.Y < 0)
+                        play("runNW");
+                    else if (velocity.Y > 0)
+                        play("runSW");
+                    else
+                        play("runW");
+
             }
             else if (velocity.Y != 0)
             {
-                play("run");
+                if (velocity.Y > 0)
+                    play("runS");
+                else if (velocity.Y < 0)
+                    play("runN");
             }
             else
             {
