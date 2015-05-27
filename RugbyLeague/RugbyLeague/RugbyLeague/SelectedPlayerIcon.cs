@@ -23,11 +23,13 @@ namespace RugbyLeague
             setOffset(9, 9);
             angle = 90;
 
+            boundingBoxOverride = false;
+
         }
 
         override public void update()
         {
-
+            angle += 2;
 
             base.update();
 

@@ -24,7 +24,7 @@ namespace RugbyLeague
             : base(xPos, yPos)
         {
             loadGraphic("field", false, false, 2048, 2048);
-
+            boundingBoxOverride = false;
             
         }
 

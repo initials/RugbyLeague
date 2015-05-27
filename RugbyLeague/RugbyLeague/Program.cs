@@ -35,7 +35,7 @@ namespace RugbyLeague
 
             initGame(w, h, new PlayState(), new Color(15, 15, 15), true, new Color(5, 5, 5));
 
-            FlxG.debug = false;
+            FlxG.debug = true;
             FlxG.level = -1;
 
 #if DEBUG

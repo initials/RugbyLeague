@@ -51,7 +51,7 @@ namespace RugbyLeague
 
             //loadGraphic(FlxG.Content.Load<Texture2D>("player"), true, false, 32, 32);
 
-            loadGraphic(FlxG.Content.Load<Texture2D>("run"), true, false, 96, 96);
+            loadGraphic(FlxG.Content.Load<Texture2D>("run_hs"), true, false, 96/2, 96/2);
 
 
             //addAnimation("idle", new int[] { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52 }, (int)FlxU.random(12,24), true);
@@ -84,16 +84,16 @@ namespace RugbyLeague
 
             isSelected = false;
 
-            height = 32;
-            width = 32;
+            height = 32/2;
+            width = 32/2;
 
-            offset.X = 12;
-            offset.Y = 12;
+            offset.X = 32/2;
+            offset.Y = 48/2;
 
             //setOffset(9,9);
 
 
-
+            boundingBoxOverride = true;
 
             mode = MODE_ATTACK;
 
@@ -142,23 +142,40 @@ namespace RugbyLeague
             {
                 play("idle");
             }
+
+
             if (isSelected)
             {
+
+                pass();
+
+                float adjustedRunSpeed = runSpeed;
+                if (FlxG.keys.L)
+                {
+                    adjustedRunSpeed *= 2;
+                }
+
+                if ((FlxControl.LEFT && FlxControl.DOWN) || (FlxControl.LEFT && FlxControl.UP) ||
+                    (FlxControl.RIGHT && FlxControl.DOWN) || (FlxControl.RIGHT && FlxControl.UP))
+                {
+                    adjustedRunSpeed *= 0.85f;
+                }
+
                 if (FlxControl.LEFT)
                 {
-                    this.velocity.X = runSpeed * -1;
+                    this.velocity.X = adjustedRunSpeed * -1;
                 }
                 if (FlxControl.RIGHT)
                 {
-                    this.velocity.X = runSpeed;
+                    this.velocity.X = adjustedRunSpeed;
                 }
                 if (FlxControl.UP)
                 {
-                    this.velocity.Y = runSpeed * -1;
+                    this.velocity.Y = adjustedRunSpeed * -1;
                 }
                 if (FlxControl.DOWN)
                 {
-                    this.velocity.Y = runSpeed;
+                    this.velocity.Y = adjustedRunSpeed;
                 }
             }
 
@@ -170,7 +187,7 @@ namespace RugbyLeague
 
             jerseyText.at(this); 
             jerseyText.x -=8;
-            jerseyText.y +=24;
+            jerseyText.y += this.height;
             jerseyText.update();
 
 
@@ -186,6 +203,72 @@ namespace RugbyLeague
             }
 
         }
+
+        public void pass()
+        {
+            // Passsing
+            if (hasBall)
+            {
+                if (FlxG.keys.justPressed(Keys.OemPeriod) || FlxG.gamepads.isNewButtonPress(Buttons.RightShoulder))
+                {
+                    Player p = team.getNextPlayerToLeft(false);
+
+                    float newAngle = FlxU.getAngle(new Vector2(x + (width / 2), y + (height / 2)), new Vector2(p.x + (width / 2), p.y + (height / 2)));
+
+                    double radians = Math.PI / 180 * (newAngle + 90);
+
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+
+                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
+
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
+                if (FlxG.keys.justPressed(Keys.OemComma) || FlxG.gamepads.isNewButtonPress(Buttons.LeftShoulder))
+                {
+                    Player p = team.getNextPlayerToRight(false);
+
+                    float newAngle = FlxU.getAngle(new Vector2(x + (width / 2), y + (height / 2)), new Vector2(p.x + (width / 2), p.y + (height / 2)));
+
+                    double radians = Math.PI / 180 * (newAngle + 90);
+
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+
+                    Console.WriteLine("This player is at : {0} {1} and player to the right is {2} {3} And the angle is {4}", x + (width / 2), y + (height / 2), p.x + (width / 2), p.y + (height / 2), newAngle);
+
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+
+                }
+                if (FlxG.keys.justReleased(Keys.K) || FlxG.gamepads.isNewButtonRelease(Buttons.LeftTrigger))
+                {
+                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 180);
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
+                else if (FlxG.keys.justReleased(Keys.L) || FlxG.gamepads.isNewButtonRelease(Buttons.RightTrigger))
+                {
+                    double radians = Math.PI / 180 * (selectedPlayerIcon.angle + 180);
+                    double velocity_x = Math.Cos((float)radians);
+                    double velocity_y = Math.Sin((float)radians);
+                    passBall(200 * (float)velocity_x * -1, 200 * (float)velocity_y * -1);
+                }
+                if (FlxG.keys.K || FlxG.gamepads.isButtonDown(Buttons.LeftTrigger))
+                {
+                    selectedPlayerIcon.angle += 3;
+                }
+                else if (FlxG.keys.L || FlxG.gamepads.isButtonDown(Buttons.RightTrigger))
+                {
+                    selectedPlayerIcon.angle -= 3;
+                }
+                else
+                {
+                    selectedPlayerIcon.angle = 90;
+                }
+            }
+        }
+
 
         public override void render(SpriteBatch spriteBatch)
         {

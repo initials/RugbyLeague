@@ -35,7 +35,7 @@ namespace RugbyLeague
 
 
             ball = new Ball(78 * 8, 132 * 8);
-            add(ball);
+            
             FlxG.follow(ball, Registry.FOLLOW_LERP);
             FlxG.followBounds(0, 0, 2048, 2048);
 
@@ -81,14 +81,11 @@ namespace RugbyLeague
 
             add(team1);
             add(team2);
+            add(ball);
         }
 
         override public void update()
         {
-            if (FlxG.keys.justPressed(Keys.B))
-            {
-                FlxG.showBounds = !FlxG.showBounds;
-            }
 
             //if (FlxG.keys.justPressed(Keys.OemComma))
             //{
